@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getServerSideProps } from './api/get';
-import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TextField, useScrollTrigger, InputAdornment, IconButton } from '@mui/material';
 import Image from 'next/image';
 import svampImage from "../../public/images/launam.jpg"
 import waveImage from "../../public/images/wave2.png"
@@ -8,6 +8,7 @@ import matImage from "../../public/images/Matsvampar.jpg"
 import preservation from "../../public/images/done_canvas2.png"
 import pickImage from "../../public/images/sv.png"
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'; // Replace Class with Category or any valid icon
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 
 
@@ -26,10 +27,56 @@ type Props = {
 
 
 const homepage = ({ blogs }: Props) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearch = () => {
+    console.log("Searching for:", searchQuery);
+  };
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Handle Category Click
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category); // Update state with clicked category
+  };
+
+  // Filter blogs based on the selected category
+  const filteredBlogs = selectedCategory
+    ? blogs.filter((blog) => blog.category.includes(selectedCategory))
+    : blogs;
+
 
   return (
     <Box>
-      <Button color='primary' href='#' sx={{ marginTop: 2, display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', fontFamily: 'Montserrat' }}>Bli medlem</Button>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', columnGap: 5, backgroundColor: '#EAEBF1' }}>
+        <TextField
+          variant="outlined"
+          placeholder="Sök svamp"
+          value={searchQuery} // Controlled input state
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{
+            fontFamily: 'Montserrat',
+            paddingBottom: 0.5,
+            width: '350px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '8px', // Rounded corners
+              maxHeight: '40px',
+              '&:hover fieldset': { border: 'none' }, // Hover effect
+              '&.Mui-focused fieldset': { border: '#none' } // Focus effect
+            }
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton onClick={handleSearch}>
+                  <SearchOutlinedIcon sx={{ color: '#3277AA' }} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <Button color='primary' href='#' sx={{ fontFamily: 'Montserrat' }}>Bli medlem</Button>
+      </Box>
       <Paper elevation={3} sx={{ padding: 3, marginTop: 0, backgroundColor: '#3277AA', }}>
         <Container maxWidth="lg" sx={{ mt: '0', display: 'flex', flexDirection: 'row', columnGap: 2, alignItems: 'center' }}>
           <Typography variant='body1' sx={{ color: 'white', fontSize: '30px', fontFamily: 'Montserrat' }}>
@@ -52,14 +99,19 @@ const homepage = ({ blogs }: Props) => {
           <Image src={pickImage} alt='picksvampt' width={180} height={260} style={{ borderRadius: 2, cursor: 'pointer', transition: 'transform 0.3s ease-in-out', }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} // Enlarge on hover
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} // Restore size
+            onClick={() => handleCategoryClick("Matlagning")}
           />
           <Image src={matImage} alt='matsvampart' width={180} height={260} style={{ borderRadius: 2, cursor: 'pointer', transition: 'transform 0.3s ease-in-out', }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} // Enlarge on hover
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} // Restore size
+            onClick={() => handleCategoryClick("Svamptyper")}
+
           />
           <Image src={preservation} alt='preservation' width={180} height={260} style={{ borderRadius: 2, cursor: 'pointer', transition: 'transform 0.3s ease-in-out', }}
             onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} // Enlarge on hover
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} // Restore size
+            onClick={() => handleCategoryClick("Konservering")}
+
           />
         </Container>
       </Paper>
@@ -71,7 +123,7 @@ const homepage = ({ blogs }: Props) => {
           container
           spacing={4}
           justifyContent="center">
-          {blogs.map((blog) => (
+          {filteredBlogs.map((blog) => (
             <Grid2 key={blog._id}>
               <Card sx={{ height: '100%', backgroundColor: '#EAEBF1', width: '300px', display: 'flex', flexDirection: 'column', }}>
                 <CardMedia
