@@ -6,7 +6,8 @@ const MushroomSchema = new mongoose.Schema({
     description: String,
     location: String,
     imageUrl: String,
-    uses: [String], //Example: ["Cooking", "Medicine"]
+    uses: String, //Example: ["Cooking", "Medicine"]
+    rating: Number,
 })
 
 export default mongoose.models.Mushroom || mongoose.model("Mushroom", MushroomSchema);
