@@ -9,7 +9,12 @@ const add = () => {
     description: "",
     category: [] as string[],
     imageUrl: "",
-    rating: 0
+    rating: 0,
+    ingredients: [] as string[],
+    preparationTime: 0,
+    cookingTime: 0,
+    preservationMethods: [] as string[],
+    relatedPosts: [] as string[],
   });
 
   const [message, setMessage] = useState("");
@@ -78,6 +83,13 @@ const add = () => {
           category: formData.category,
           rating: formData.rating,
           imageUrl: uploadedImageUrl, // Just send 'uses' as a string
+          preparationTime: formData.preparationTime,
+          cookingTime: formData.cookingTime,
+          preservationMethods: formData.preservationMethods,
+          relatedPosts: formData.relatedPosts,
+          ingredients: formData.ingredients,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }),
       })
       const data = await res.json();
@@ -88,7 +100,8 @@ const add = () => {
       if (res.ok) {
         setMessage("Blog added successfully!");
         setOpenSnackbar(true);
-        setFormData({ name: "", description: "", category: [], imageUrl: "", rating: 0});
+        setFormData({ name: "", description: "", category: [], imageUrl: "", rating: 0, ingredients: [], preparationTime: 0, cookingTime: 0, preservationMethods: [], relatedPosts: [] });
+        setImagePreview(null);
         setImageFile(null);
       } else {
         setMessage(data.message || "Error adding blog.");
@@ -106,11 +119,11 @@ const add = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 3, marginTop: 10, marginBottom: 10}}>
         <Typography variant="h5" gutterBottom>
-          Lägg till en ny svamp
+          Lägg till en ny blogg
         </Typography>
 
         <form onSubmit={handleSubmit}>
-          <Grid2 container spacing={2} sx={{ display: 'flex', flexDirection: 'column', rowGap: 2 }}>
+          <Grid2 container spacing={2} sx={{ display: 'flex', flexDirection: 'column', rowGap: 2, mt: 3 }}>
             <Grid2 >
               <TextField fullWidth label="Namn" name="name" value={formData.name} onChange={handleChange} required />
             </Grid2>
@@ -127,7 +140,7 @@ const add = () => {
                   multiple // Allow multiple category selections
                   renderValue={(selected) => selected.join(", ")}
                 >
-                  {["Cooking", "Mushroom Types", "Preservation"].map((cat) => (
+                  {["Matlagning", "Svamptyper", "Konservering"].map((cat) => (
                     <MenuItem key={cat} value={cat}>
                       <Checkbox checked={formData.category.includes(cat)} />
                       <ListItemText primary={cat} />
@@ -136,8 +149,54 @@ const add = () => {
                 </Select>
               </FormControl>
             </Grid2>
+            {/* Conditional Fields Based on Category Selection */}
+            {formData.category && formData.category.includes("Matlagning") && (
+              <>
+                <Grid2 >
+                  <TextField fullWidth label="Ingredienser" name="ingredients"
+                    value={formData.ingredients.join(", ")} // Convert array to string
+                    onChange={(e) =>
+                      setFormData({ ...formData, ingredients: e.target.value.split(", ") }) // Convert string back to array
+                    }
+                    required />
+                </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Förberedelseltid" name="preparationTime" value={formData.preparationTime} onChange={handleChange} required />
+                </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Tillagningstid" name="cookingTime" value={formData.cookingTime} onChange={handleChange} required />
+                </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
+                      setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
+                </Grid2>
+              </>
+            )}
+            {formData.category && formData.category.includes("Svamptyper") && (
+              <Grid2 >
+                 <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
+                  setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
+              </Grid2>
+            )}
+            {formData.category && formData.category.includes("Konservering") && (
+              <>
+                <Grid2 >
+                  <TextField fullWidth label="Konserveringsmetoder" name="preservationMethods" value={formData.preservationMethods.join(", ")}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        preservationMethods: e.target.value.split(", "),
+                      })
+                    } />
+                </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
+                    setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
+                </Grid2>
+              </>
+            )}
 
-
+            {/* Rating Field */}
             <Grid2 >
               <TextField fullWidth label="Rating" name="rating" value={formData.rating} onChange={handleChange} required />
             </Grid2>
@@ -145,7 +204,7 @@ const add = () => {
             {/* File Upload for Image */}
             <Grid2 >
               <Button variant="contained" component="label" fullWidth>
-                Upload Image
+                Ladda upp bild
                 <input type="file" hidden accept="image/*" onChange={handleFileChange} />
               </Button>
             </Grid2>
@@ -165,7 +224,7 @@ const add = () => {
 
             <Grid2>
               <Button type="submit" variant="contained" color="primary" fullWidth>
-                Add Blog
+                Lägg till blogg
               </Button>
             </Grid2>
           </Grid2>

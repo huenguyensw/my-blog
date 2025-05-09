@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     try {
       // Destructure the required fields from the request body
-      const { name, description, category, imageUrl, rating } = req.body;
+      const { name, description, category, imageUrl, rating, preparationTime, cookingTime, preservationMethods, relatedPosts, ingredients } = req.body;
 
       // Check if the required fields are present
       // Add your logic to process the data
@@ -19,13 +19,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Connect to the database
       await connectDB();
 
-      // Create a new mushroom record with only id and imageUrl (other fields are not stored in MongoDB)
+      // Create a new mushroom record
       const newBlog = new Blog({
         name: req.body.name,
         description: req.body.description,
         category: req.body.category,  // Make sure you include the category field
         imageUrl: req.body.imageUrl,
         rating: req.body.rating,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        preparationTime: req.body.preparationTime,
+        cookingTime: req.body.cookingTime,
+        preservationMethods: req.body.preservationMethods,  
+        relatedPosts: req.body.relatedPosts,
+        ingredients: req.body.ingredients,  
       });
 
       // Save the mushroom record to the database
