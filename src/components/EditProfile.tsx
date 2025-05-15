@@ -1,7 +1,4 @@
-import { AuthContext } from '@/context/Auth';
 import { Alert, Avatar, Box, Button, Grid2, Snackbar, TextField } from '@mui/material';
-import { image } from 'framer-motion/client';
-import { set } from 'mongoose';
 import React, { useState, useEffect } from 'react';
 
 interface User {

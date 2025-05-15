@@ -1,12 +1,12 @@
-import { Avatar, Box, Button, Container, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Container, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material'
 import Image from 'next/image'
-import React, { use, useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import waveImage from "../../public/images/wave2.png"
 import svampImage from "../../public/images/launam.jpg"
 import svampLogo from "../../public/images/svamp.png"
 import { useRouter } from 'next/router';
-import { AuthContext, User } from '@/context/Auth';
+import { AuthContext } from '@/context/Auth';
 import { useSearchParams } from 'next/navigation';
 
 
@@ -23,7 +23,6 @@ const Header = () => {
         console.log("Searching for:", searchQuery);
     };
 
-    const mushroomEmoji = '🍄';
 
 
 

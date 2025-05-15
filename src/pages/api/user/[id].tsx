@@ -4,7 +4,6 @@ import User from "@/models/User";
 import bcrypt from 'bcrypt';
 import { IncomingForm } from 'formidable';
 import fs from 'fs';
-import type { File } from "formidable";
 
 // Disable default body parsing
 export const config = {

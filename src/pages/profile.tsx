@@ -3,12 +3,13 @@ import Header from '@/components/Header'
 import { getServerSideProps } from './api/get';
 import { Box, Button, Container, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, {useState, useContext} from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import ArticleIcon from '@mui/icons-material/Article';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Footer from '@/components/Footer'
 import { AuthContext } from '@/context/Auth'
+import Image from 'next/image';
 
 type Blog = {
   _id: string;
@@ -38,9 +39,9 @@ type Props = {
   blogs: Blog[];
 };
 
-const profile = ({ blogs }: Props) => {
-  const [isPage, setIsPage] = React.useState(0);
-  const { user, setUser } = React.useContext(AuthContext);
+const Profile = ({ blogs }: Props) => {
+  const [isPage, setIsPage] = useState(0);
+  const { user, setUser } = useContext(AuthContext);
 
   const myBlogs = blogs.filter((blog) => blog.author?._id === user?._id);
   const myFavorites = blogs.filter((blog) => user?.favorites?.includes(blog._id));
@@ -206,9 +207,9 @@ const profile = ({ blogs }: Props) => {
                 }}
               >
                 {myBlogs.map((blog) => (
-                  <Link href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link  key={blog._id} href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
-                      key={blog._id}
+                     
                       elevation={3}
                       sx={{
                         padding: 2,
@@ -230,10 +231,12 @@ const profile = ({ blogs }: Props) => {
                         </Typography>
                       </Box>
                       <Box sx={{ display: 'flex', flexDirection: 'row', columnGap: 2 }}>
-                        <img
+                        <Image
                           src={blog.imageUrl}
                           alt={blog.name}
-                          style={{ width: '100px', height: '100px', borderRadius: '8px' }}
+                          width = {100}
+                          height= {100}
+                          style={{ borderRadius: '8px' }}
                         />
 
                         <Box>
@@ -266,9 +269,9 @@ const profile = ({ blogs }: Props) => {
                 }}
               >
                 {myFavorites.map((blog) => (
-                  <Link href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link  key={blog._id} href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
-                      key={blog._id}
+                     
                       elevation={3}
                       sx={{
                         padding: 2,
@@ -280,10 +283,12 @@ const profile = ({ blogs }: Props) => {
                       }}
 
                     >
-                      <img
+                      <Image
                         src={blog.imageUrl}
                         alt={blog.name}
-                        style={{ width: '100px', height: '100px', borderRadius: '8px' }}
+                        width={100}
+                        height={100}
+                        style={{ borderRadius: '8px' }}
                       />
                       <Box>
                         <Typography variant="h6" gutterBottom>
@@ -308,7 +313,7 @@ const profile = ({ blogs }: Props) => {
   )
 }
 
-export default profile
+export default Profile
 
 export { getServerSideProps } 
 

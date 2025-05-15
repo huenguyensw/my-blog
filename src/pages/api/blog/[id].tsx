@@ -16,6 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             props: { blog: JSON.parse(JSON.stringify(blog)) },
         };
     } catch (error) {
+        console.error("Error fetching blog:", error);
         return { notFound: true };
     }
 }
