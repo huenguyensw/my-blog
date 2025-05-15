@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 
-
 if (!process.env.DB_URL) {
     throw new Error("⚠️ MongoDB URI is not defined in environment variables.");
 };

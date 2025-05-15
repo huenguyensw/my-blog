@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { createContext, useContext } from 'react';
 
-interface User {
+export interface User {
     _id: string;
-    username: string;
+    userName: string;
     password: string;
     email: string;
-    firstname?: string;
-    lastname?: string;
+    firstName?: string;
+    lastName?: string;
     imageUrl?: string;
+    favorites?: string[];
 }
 
 
@@ -55,6 +56,18 @@ export const AuthContext = createContext<{
         useEffect(() => {
             isLoggedIn();   
         }, []);
+
+        useEffect(() => {
+            if (token) {
+                localStorage.setItem('token', token);
+            }
+        }, [token]);
+        
+        useEffect(() => {
+            if (user) {
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+        }, [user]);
 
 
         return (

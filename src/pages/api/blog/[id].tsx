@@ -7,7 +7,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const { id } = context.params!;
     try {
-        const blog = await Blog.findById(id).lean();
+        const blog = await Blog.findById(id).populate("author","firstName lastName").lean();
         if (!blog) {
             return { notFound: true };
         }

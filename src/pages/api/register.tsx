@@ -43,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         imageUrl: req.body.imageUrl,
         userName: req.body.userName,
         password: hashedPassword,
+        favorites: [],
       });
 
       // Save the mushroom record to the database

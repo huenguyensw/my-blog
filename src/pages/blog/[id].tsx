@@ -1,5 +1,5 @@
 // get  blog details
-import { Box, Card, CardContent, CardMedia, Container, Paper, Rating, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, Grid2, Paper, Rating, Typography } from '@mui/material';
 import { getServerSideProps } from '../api/blog/[id]';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -23,6 +23,14 @@ type Blog = {
     preservationMethods: string[];
     relatedPosts: string[];
     ingredients: string[];
+    author?: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    imageUrl?: string;
+    };
+    recognization: string[];
+    cookingSteps: string[];
 };
 
 type Props = {
@@ -37,81 +45,159 @@ const BlogDetail = ({ blog }: Props) => {
     const formattedDate = dayjs(blog?.createdAt).format('YYYY-MM-DD');
 
     const pointingEmoji = '👉';
-    
+
 
     if (!blog) return <Typography variant="h4">Blog not found</Typography>;
+    console.log("Blog:", blog);
 
     return (
         <Box>
             <Header />
-            <Container maxWidth="lg" sx={{borderRadius: 1}} >
-                {/* <Paper elevation={3} sx={{ padding: 0, margin: 0, }}> */}
-                    <Box sx={{ mt: 0, backgroundColor: '#EAEBF1', borderRadius: 1 }}>
-                        <CardMedia component="img" height="500" sx={{borderTopLeftRadius: 2, borderTopRightRadius: 2}} image={blog.imageUrl} alt={blog.name} />
-                        <CardContent>
-                            <Typography variant="h4" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 700 }}>
-                                {blog.name}
+            <Container maxWidth="lg" >
+                <Paper elevation={0} sx={{ borderRadius: 2, padding: 4, mt: 4 }}>
+                    {/* <Box sx={{  backgroundColor: '#EAEBF1', borderRadius: 1 }}> */}
+                    <Grid2 sx={{ flexDirection: 'column'}}>
+                        <Grid2 sx={{ color: '#0c2d72', fontWeight: 700, fontSize: '45px' }}>
+                            {blog.name}
+                            <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize: '20px' }}>
+                                Publicerat {formattedDate} av {blog.author?.firstName} {blog.author?.lastName}
                             </Typography>
-                            <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 0, mb: 2, fontSize:'24px' }}>
-                                Publicerat {formattedDate}
-                            </Typography>
-                            {/* <Rating name="read-only" value={blog.rating || 0} readOnly sx={{ mb: 2, mt: 2 }} /> */}
-                            <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize:'24px'  }}>
+                            {blog.category.map((cat, index) => (
+                                <Button
+                                    key={index}
+                                    variant="outlined"
+                                    sx={{
+                                        backgroundColor: '#EAEBF1',
+                                        color: '#0c2d72',
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: 'bold',
+                                        borderRadius: 2,
+                                        mr: 1,
+                                        mb: 4,
+                                    }}>
+                                    {cat}
+                                </Button>
+                            ))}
+
+                            <CardMedia component="img" height="500" sx={{ borderTopLeftRadius: 2, borderTopRightRadius: 2 }} image={blog.imageUrl} alt={blog.name} />
+
+                            {blog.category.includes('Matlagning') && 
+                            <>
+                                 <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, columnGap: 1 }}>
+                                    <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize: '20px' }}>
+                                        <span style={{ color: '#F97300', fontWeight: '500' }}>Beredningstid </span>{blog.preparationTime} minuter  <span style={{ color: '#F97300', fontWeight: '500' }}>| </span>
+                                    </Typography>
+                                    <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize: '20px' }}>
+                                        <span style={{ color: '#F97300', fontWeight: '500' }}>Tillagningstid </span>{blog.cookingTime} minuter
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', alignItems: 'center', mt: 4, columnGap: 1, mb: 8 }}>
+                                    <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize: '20px' }}>
+                                        {blog.description}
+                                    </Typography>
+                                </Box>
+                            </>}
+
+
+                            {blog.category.includes('Matlagning') &&
+                                <Box sx={{ display: 'flex', alignItems: 'flex-start', mt: 2, columnGap: 8, }}>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'center' }}>
+                                            Ingredienser
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400' }} />
+
+                                        {blog?.ingredients?.length > 0 && <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize: '20px' }}>
+                                            {blog.ingredients.map((ingredient, index) => (
+                                                <ul key={index}>
+                                                    <li>{ingredient}</li>
+                                                </ul>
+                                            ))}
+                                        </Typography>}
+                                    </Box>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'center' }}>
+                                            Implementering
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400' }} />
+
+                                        <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 2, fontSize: '20px' }}>
+                                            {blog.cookingSteps.map((step, index) => (
+                                                <ul key={index}>
+                                                    <li>{pointingEmoji} {step}</li>
+                                                </ul>
+                                            ))}
+                                        </Typography>
+                                    </Box>
+                                </Box>}
+                            {blog.category.includes('Konservering') &&
+                                <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', mt: 8, rowGap: 4, }}>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'left' }}>
+                                            Beskrivning
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400', width: '150px' }} />
+                                        <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 2, fontSize: '20px' }}>
+                                            {blog.description}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'left' }}>
+                                            Bevarande metoder
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400', width: '250px' }} />
+                                        {blog?.preservationMethods?.length > 0 && <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 2, fontSize: '20px' }}>
+                                            {blog.preservationMethods.map((method, index) => (
+                                                <ul key={index}>
+                                                    <li>{method}</li>
+                                                </ul>
+                                            ))}
+                                        </Typography>}
+                                    </Box>
+                                </Box>}
+                            {blog.category.includes('Svampar') &&
+                                <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', mt: 8, rowGap: 4, }}>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'left' }}>
+                                            Beskrivning
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400', width: '150px' }} />
+                                        <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 2, fontSize: '20px' }}>
+                                            {blog.description}
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant="h1" sx={{ fontFamily: 'Montserrat', color: '#F97300', fontWeight: 'bold', mt: 1, fontSize: '20px', textTransform: 'uppercase', textAlign: 'left' }}>
+                                            Kännetecken
+                                        </Typography>
+                                        <Divider sx={{ backgroundColor: '#F97300', height: 1, fontWeight: '400', width: '160px' }} />
+                                        {blog?.recognization?.length > 0 && <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 2, fontSize: '20px' }}>
+                                            {blog.recognization.map((reg, index) => (
+                                                <ul key={index}>
+                                                    <li>{reg}</li>
+                                                </ul>
+                                            ))}
+                                        </Typography>}
+                                    </Box>
+                                </Box>}
+
+                            <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 4, fontSize: '20px' }}>
                                 Relaterade inlägg:
                             </Typography>
-                            {blog?.relatedPosts?.length > 0 && (<Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize:'24px'  }}>
+                            {blog?.relatedPosts?.length > 0 && (<Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize: '20px' }}>
                                 {blog.relatedPosts.map((post, index) => (
-                                    <ul key={index}>
-                                        <li>{pointingEmoji} <Link href={post} target='_blank'>{post}</Link></li>
-                                    </ul>
+                                    <Box key={index}>
+                                        <Link href={post} target='_blank'>{post}</Link>
+                                    </Box>
                                 ))}
-                        </Typography>)}
-                        {blog.category.includes('Matlagning') &&
-                            <>
-                                <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize: '24px' }}>
-                                    Ingredienser:
-                                </Typography>
-                                {blog?.ingredients?.length > 0 && <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize: '24px' }}>
-                                    {blog.ingredients.map((ingredient, index) => (
-                                        <ul key={index}>
-                                            <li>{ingredient}</li>
-                                        </ul>
-                                    ))}
-                                </Typography>}
-                            
-                            <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize:'24px'  }}>
-                                Beredningstid:
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 0.2 , fontSize:'24px' }}>
-                                <ul><li>{blog.preparationTime} timmar</li></ul>
-                            </Typography>
-                            <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1, fontSize:'24px'  }}>
-                                Tillagningstid:
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, fontSize:'24px'  }}>
-                                <ul><li>{blog.cookingTime} timmar</li></ul>
-                            </Typography>
-                            <Typography variant="body1" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 1 , fontSize:'24px' }}>
-                                Implementeringssteg:
-                            </Typography>
-                            </>}
-                            <Typography variant="body2" sx={{ fontFamily: 'Montserrat', color: '#0c2d72', fontWeight: 500, mt: 0.2, fontSize:'24px'  }}>
-                                <ul>
-                                    <li>{blog.description}</li>
-                                </ul>
-                            </Typography>
-                            
-                            <Box sx={{ mt: 8 }}>
-                                <Typography onClick={() => router.back()} sx={{ cursor: 'pointer', color: '#3277AA', fontFamily: 'Montserrat', fontWeight: 500, fontSize:'24px'  }}>
-                                    ← Back to blogs
-                                </Typography>
-                            </Box>
-                        </CardContent>
-                    </Box>
-                {/* </Paper> */}
+                            </Typography>)}
+                        </Grid2>
+
+                    </Grid2>
+                </Paper>
             </Container>
-            <Subscribe/>
-            <Footer/>
+            <Subscribe />
+            <Footer />
         </Box>
     )
 }

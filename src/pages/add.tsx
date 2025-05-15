@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
+import { AuthContext } from '@/context/Auth';
 
 
 const add = () => {
@@ -15,12 +16,16 @@ const add = () => {
     cookingTime: 0,
     preservationMethods: [] as string[],
     relatedPosts: [] as string[],
+    author: "",
+    cookingSteps: [] as string[],
+    recognization: [] as string[],
   });
 
   const [message, setMessage] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const {user, token} = useContext(AuthContext);
 
   const handleChange = (e: SelectChangeEvent<string[]> | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -88,8 +93,11 @@ const add = () => {
           preservationMethods: formData.preservationMethods,
           relatedPosts: formData.relatedPosts,
           ingredients: formData.ingredients,
+          recognization: formData.recognization,
+          cookingSteps: formData.cookingSteps,
           createdAt: new Date(),
           updatedAt: new Date(),
+          author: user?._id,
         }),
       })
       const data = await res.json();
@@ -100,9 +108,10 @@ const add = () => {
       if (res.ok) {
         setMessage("Blog added successfully!");
         setOpenSnackbar(true);
-        setFormData({ name: "", description: "", category: [], imageUrl: "", rating: 0, ingredients: [], preparationTime: 0, cookingTime: 0, preservationMethods: [], relatedPosts: [] });
+        setFormData({ name: "", description: "", category: [], imageUrl: "", rating: 0, ingredients: [], preparationTime: 0, cookingTime: 0, preservationMethods: [], relatedPosts: [], author: "", cookingSteps: [], recognization: [] });
         setImagePreview(null);
         setImageFile(null);
+        window.location.href = "/profile?isLoginPage=false"; // Redirect to home page
       } else {
         setMessage(data.message || "Error adding blog.");
         setOpenSnackbar(true);
@@ -140,7 +149,7 @@ const add = () => {
                   multiple // Allow multiple category selections
                   renderValue={(selected) => selected.join(", ")}
                 >
-                  {["Matlagning", "Svamptyper", "Konservering"].map((cat) => (
+                  {["Matlagning", "Svampar", "Konservering"].map((cat) => (
                     <MenuItem key={cat} value={cat}>
                       <Checkbox checked={formData.category.includes(cat)} />
                       <ListItemText primary={cat} />
@@ -148,6 +157,10 @@ const add = () => {
                   ))}
                 </Select>
               </FormControl>
+            </Grid2>
+            <Grid2 >
+              {/* <TextField fullWidth label="Författare" name="author" value={`${user?.firstName || ''} ${user?.lastName || ''}`} required /> */}
+              <TextField fullWidth label="Författare" name="author" value={user?._id} required />
             </Grid2>
             {/* Conditional Fields Based on Category Selection */}
             {formData.category && formData.category.includes("Matlagning") && (
@@ -170,22 +183,32 @@ const add = () => {
                   <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
                       setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
                 </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Tillagningssteg" name="cookingSteps" value={formData.cookingSteps.join(". ")} onChange={(e) =>
+                      setFormData({ ...formData, cookingSteps: e.target.value.split(". ") })} />
+                </Grid2>
               </>
             )}
-            {formData.category && formData.category.includes("Svamptyper") && (
-              <Grid2 >
-                 <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
-                  setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
-              </Grid2>
+            {formData.category && formData.category.includes("Svampar") && (
+              <>
+                <Grid2 >
+                  <TextField fullWidth label="Relaterade inlägg" name="relatedPosts" value={formData.relatedPosts.join(", ")} onChange={(e) =>
+                    setFormData({ ...formData, relatedPosts: e.target.value.split(", ") })} />
+                </Grid2>
+                <Grid2 >
+                  <TextField fullWidth label="Svampigenkänning" name="recognization" value={formData.recognization.join(". ")} onChange={(e) =>
+                    setFormData({ ...formData, recognization: e.target.value.split(". ") })} />
+                </Grid2>
+              </>
             )}
             {formData.category && formData.category.includes("Konservering") && (
               <>
                 <Grid2 >
-                  <TextField fullWidth label="Konserveringsmetoder" name="preservationMethods" value={formData.preservationMethods.join(", ")}
+                  <TextField fullWidth label="Konserveringsmetoder" name="preservationMethods" value={formData.preservationMethods.join(". ")}
                     onChange={(e) =>
                       setFormData({
                         ...formData,
-                        preservationMethods: e.target.value.split(", "),
+                        preservationMethods: e.target.value.split(". "),
                       })
                     } />
                 </Grid2>

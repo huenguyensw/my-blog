@@ -5,7 +5,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#5C9AC2', mt: 6 }}>
+    <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#5C9AC2', mt: 6 , mb: 0 }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center',  backgroundColor: '#5C9AC2' }}>
         <Typography variant='body1' sx={{ color: 'white', fontSize: '20px', fontFamily: 'Montserrat', paddingRight: 2 }}>
           Kolla in Oss på Sociala Medier

@@ -1,5 +1,5 @@
 // Mongoose schema for mushrooms
-import mongoose from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema({
     userName: { type: String, required: true },
     password: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    favorites: { type: [String], default: [] },
 })
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+const User = models.User || model("User", UserSchema);
+export default User;

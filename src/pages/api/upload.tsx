@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import multer from "multer";
 import { connectDB } from "@/lib/mongoDB";
-import Mushroom from "@/models/Mushroom";
+import Blog from "@/models/Blog";
 import path from "path";
 
 // Multer storage config (store files in "public/uploads")
