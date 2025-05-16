@@ -3,7 +3,7 @@ import Header from '@/components/Header'
 import { getServerSideProps } from './api/get';
 import { Box, Button, Container, Paper, Typography } from '@mui/material'
 import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React from 'react'
 import EditIcon from '@mui/icons-material/Edit';
 import ArticleIcon from '@mui/icons-material/Article';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -38,7 +38,7 @@ type Props = {
   blogs: Blog[];
 };
 
-const profile = ({ blogs }: Props) => {
+const Profile = ({ blogs }: Props) => {
   const [isPage, setIsPage] = React.useState(0);
   const { user, setUser } = React.useContext(AuthContext);
 
@@ -205,10 +205,11 @@ const profile = ({ blogs }: Props) => {
                   marginTop: 2,
                 }}
               >
-                {myBlogs.map((blog) => (
-                  <Link href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                {myBlogs.map((blog, index) => (
+                  <Link 
+                  key={index}
+                  href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
-                      key={blog._id}
                       elevation={3}
                       sx={{
                         padding: 2,
@@ -265,10 +266,11 @@ const profile = ({ blogs }: Props) => {
                   marginTop: 2,
                 }}
               >
-                {myFavorites.map((blog) => (
-                  <Link href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                {myFavorites.map((blog, index) => (
+                  <Link 
+                  key={index}
+                  href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
-                      key={blog._id}
                       elevation={3}
                       sx={{
                         padding: 2,
@@ -308,7 +310,7 @@ const profile = ({ blogs }: Props) => {
   )
 }
 
-export default profile
+export default Profile
 
 export { getServerSideProps } 
 

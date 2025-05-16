@@ -1,5 +1,5 @@
 // Mongoose schema for mushrooms
-import mongoose,  { Schema, model, models } from "mongoose";
+import mongoose,  {  model, models } from "mongoose";
 
 const BlogSchema = new mongoose.Schema({
     name: { type: String, required: true },

@@ -1,13 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getServerSideProps } from './api/get';
-import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TextField, useScrollTrigger, InputAdornment, IconButton, TablePagination, Avatar } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TablePagination, Avatar } from '@mui/material';
 import Image from 'next/image';
 import matImage from "../../public/images/Matsvampar.jpg"
 import preservation from "../../public/images/done_canvas2.png"
 import pickImage from "../../public/images/svampar.png"
-import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'; // Replace Class with Category or any valid icon
 import { useRouter } from 'next/router';
-import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Subscribe from '@/components/Subscribe';
@@ -45,35 +43,12 @@ type Props = {
   blogs: Blog[];
 };
 
-type RatingType = {
-  name: string;
-  value: number;
-}
 
 
-const AnimatedRating = ({ name, value }: RatingType) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{
-        repeat: Infinity,
-        repeatType: "mirror",
-        duration: 1.0, // Duration for one full flicker cycle
-      }}
-    >
-      <Rating name={name} value={value} readOnly />
-    </motion.div>
-  );
-};
 
-const homepage = ({ blogs }: Props) => {
+const Homepage = ({ blogs }: Props) => {
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const handleSearch = () => {
-    console.log("Searching for:", searchQuery);
-  };
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { user, setUser } = React.useContext(AuthContext);
@@ -373,6 +348,6 @@ const homepage = ({ blogs }: Props) => {
   )
 }
 
-export default homepage
+export default Homepage
 
 export { getServerSideProps };

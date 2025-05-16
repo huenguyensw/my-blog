@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 export interface User {
     _id: string;

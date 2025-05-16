@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/lib/mongoDB"; // MongoDB connection function
 import User from "@/models/User"; // Blog model
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

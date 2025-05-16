@@ -1,7 +1,9 @@
-require('dotenv').config(); 
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const config = {
   secretKey: process.env.JWT_SECRET_KEY, // Generate a random secret key
 };
 
-module.exports = config;
+export default config;

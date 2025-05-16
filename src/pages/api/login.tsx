@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/lib/mongoDB"; // MongoDB connection function
 import User from "@/models/User"; // Blog model
-import jwt from 'jsonwebtoken'; // Import the jsonwebtoken library
-const config = require('../../config/secretkey'); 
-const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
+import config from '../../config/secretkey';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid'; // Import the uuid library
 
 
 
@@ -36,6 +36,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(401).json({ message: 'Ogiltigt lösenord' });
         }
     // Generate a JWT token upon successful login
+     if (!config.secretKey) {
+        throw new Error('JWT secret key is not defined.');
+      }
         const token = jwt.sign({ id: existingUser._id }, config.secretKey, { expiresIn: '1h' });  
         
         // Return a success response

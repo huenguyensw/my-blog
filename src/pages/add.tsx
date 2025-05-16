@@ -4,7 +4,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { AuthContext } from '@/context/Auth';
 
 
-const add = () => {
+const Add = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -25,7 +25,7 @@ const add = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const {user, token} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
   const handleChange = (e: SelectChangeEvent<string[]> | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -121,6 +121,7 @@ const add = () => {
     } catch (error) {
       setMessage("Something went wrong.");
       setOpenSnackbar(true);
+      console.error("Error:", error);
     }
   };
 
@@ -145,7 +146,7 @@ const add = () => {
                 <Select
                   name="category"
                   value={formData.category}
-                  onChange={(e) => handleChange(e as any)}
+                  onChange={(e) => handleChange(e as SelectChangeEvent<string[]>)}
                   multiple // Allow multiple category selections
                   renderValue={(selected) => selected.join(", ")}
                 >
@@ -261,4 +262,4 @@ const add = () => {
   )
 }
 
-export default add
+export default Add

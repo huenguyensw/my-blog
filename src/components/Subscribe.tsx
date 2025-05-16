@@ -1,5 +1,4 @@
-import { Height } from '@mui/icons-material'
-import { Box, Button, Container, Divider, Paper, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Divider, TextField, Typography } from '@mui/material'
 import React from 'react'
 
 const Subscribe = () => {

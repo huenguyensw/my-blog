@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, Box, Link } from "@mui/material";
+import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, Box, Link } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
 import Header from '@/components/Header';
 import { AuthContext } from '@/context/Auth';
@@ -118,6 +118,7 @@ const Auth = () => {
     } catch (error) {
       setMessage("Något gick fel.");
       setOpenSnackbar(true);
+      console.error("Error during registration:", error);
     }
   };
 
@@ -149,6 +150,8 @@ const Auth = () => {
       }
     } catch (error) {
       setMessage('Något gick fel! Försök igen.');
+      setOpenSnackbar(true);
+      console.error('Error during login:', error);
     }
   };
 
