@@ -3,12 +3,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/lib/mongoDB"; // MongoDB connection function
 import Blog from "@/models/Blog"; // Blog model
+import { a } from "framer-motion/client";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
       // Destructure the required fields from the request body
-      const { name, description, category, imageUrl, rating, author} = req.body;
+      const { name, description, category, imageUrl, rating, preparationTime, cookingTime, preservationMethods, relatedPosts, ingredients, author, cookingSteps, recognization} = req.body;
 
       // Check if the required fields are present
       // Add your logic to process the data

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, Box, Link } from "@mui/material";
+import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, Box, Link } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
 import Header from '@/components/Header';
 import { AuthContext } from '@/context/Auth';
 import Footer from '@/components/Footer';
-import Image from 'next/image';
 
 
 const Auth = () => {
@@ -119,7 +118,6 @@ const Auth = () => {
     } catch (error) {
       setMessage("Något gick fel.");
       setOpenSnackbar(true);
-      console.error("Error:", error);
     }
   };
 
@@ -151,7 +149,6 @@ const Auth = () => {
       }
     } catch (error) {
       setMessage('Något gick fel! Försök igen.');
-      console.error("Login error:", error);
     }
   };
 
@@ -251,7 +248,7 @@ const Auth = () => {
                 {imagePreview && (
                   <Grid2>
                     <Typography variant="body2">Preview:</Typography>
-                    <Image src={imagePreview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+                    <img src={imagePreview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
                   </Grid2>
                 )}
 

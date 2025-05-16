@@ -2,10 +2,9 @@ import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { AuthContext } from '@/context/Auth';
-import Image from 'next/image';
 
 
-const Add = () => {
+const add = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -26,7 +25,7 @@ const Add = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const {user} = useContext(AuthContext);
+  const {user, token} = useContext(AuthContext);
 
   const handleChange = (e: SelectChangeEvent<string[]> | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -122,7 +121,6 @@ const Add = () => {
     } catch (error) {
       setMessage("Something went wrong.");
       setOpenSnackbar(true);
-      console.error("Error:", error);
     }
   };
 
@@ -147,7 +145,7 @@ const Add = () => {
                 <Select
                   name="category"
                   value={formData.category}
-                  onChange={(e) => handleChange(e as SelectChangeEvent<string[]>)}
+                  onChange={(e) => handleChange(e as any)}
                   multiple // Allow multiple category selections
                   renderValue={(selected) => selected.join(", ")}
                 >
@@ -238,13 +236,12 @@ const Add = () => {
             {imagePreview && (
               <Grid2 >
                 <Typography variant="body2">Preview:</Typography>
-                <Image src={imagePreview} alt="Preview"
-                  width={200}
-                  height={200}
-                  style={{
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                  }} />
+                <img src={imagePreview} alt="Preview" style={{
+                  width: "100%", // Responsive width
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }} />
               </Grid2>
             )}
 
@@ -264,4 +261,4 @@ const Add = () => {
   )
 }
 
-export default Add
+export default add

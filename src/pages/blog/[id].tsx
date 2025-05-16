@@ -1,6 +1,7 @@
 // get  blog details
-import { Box, Button, CardMedia, Container, Divider, Grid2, Paper, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, Grid2, Paper, Rating, Typography } from '@mui/material';
 import { getServerSideProps } from '../api/blog/[id]';
+import { useRouter } from 'next/router';
 import React from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -39,6 +40,7 @@ type Props = {
 
 
 const BlogDetail = ({ blog }: Props) => {
+    const router = useRouter();
 
     const formattedDate = dayjs(blog?.createdAt).format('YYYY-MM-DD');
 
