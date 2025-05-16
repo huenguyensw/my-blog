@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextApp"
+      },
+      {
+        "source": "/favicon.ico",
+        "destination": "/favicon.ico"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}
