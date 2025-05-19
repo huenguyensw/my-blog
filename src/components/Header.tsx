@@ -96,7 +96,7 @@ const Header = () => {
                     {token? (
                         <Avatar 
                         alt="User"
-                        src={`http://localhost:3000/${user?.imageUrl}`} 
+                        src={user?.imageUrl} 
                         sx={{ width: 56, height: 56, cursor: 'pointer' }}
                         onClick={() => router.push("/profile?isLoginPage=false")}
                       />
