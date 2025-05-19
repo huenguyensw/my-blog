@@ -1,5 +1,6 @@
-require('dotenv').config()
+import dotenv from 'dotenv';
 
+dotenv.config();
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
