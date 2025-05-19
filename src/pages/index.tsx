@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import Head from "next/head";
 import { getServerSideProps } from './api/get';
 import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TablePagination, Avatar } from '@mui/material';
 import Image from 'next/image';
@@ -130,6 +131,24 @@ const Homepage = ({ blogs }: Props) => {
 
 
   return (
+    <>
+    <Head>
+        <title>Mushroom Blog | Discover, Learn, Share</title>
+        <meta name="description" content="Explore the world of mushrooms with insightful articles, tips, and stunning visuals. 🍄" />
+
+        {/* Open Graph tags for LinkedIn preview */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mushroom-blog-omega.vercel.app/" />
+        <meta property="og:title" content="Mushroom Blog | Discover, Learn, Share" />
+        <meta property="og:description" content="Explore the world of mushrooms with insightful articles, tips, and stunning visuals. 🍄" />
+        <meta property="og:image" content="https://mushroom-blog-omega.vercel.app/images/wave2.png" />
+
+        {/* Twitter Card (optional) */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Mushroom Blog | Discover, Learn, Share" />
+        <meta name="twitter:description" content="Explore the world of mushrooms with insightful articles, tips, and stunning visuals. 🍄" />
+        <meta name="twitter:image" content="https://mushroom-blog-omega.vercel.app/images/wave2.png" />
+      </Head>
     <Box>
       <Header />
       <Paper elevation={0} sx={{ padding: 3, marginTop: 6, backgroundColor: '#F0EBE3', }}>
@@ -344,6 +363,7 @@ const Homepage = ({ blogs }: Props) => {
       <Subscribe />
       <Footer />
     </Box>
+    </>
 
   )
 }
