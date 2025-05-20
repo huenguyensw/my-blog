@@ -151,19 +151,29 @@ const Homepage = ({ blogs }: Props) => {
       </Head>
     <Box>
       <Header />
-      <Paper elevation={0} sx={{ padding: 3, marginTop: 6, backgroundColor: '#F0EBE3', }}>
-        <Container maxWidth="lg" sx={{ mt: 5, mb: 5, display: 'flex', flexDirection: 'row', columnGap: 2, alignItems: 'center', justifyContent: 'space-around', rowGap: 3 }}>
-          <Box sx={{
-            borderRadius: 2,
-            overflow: 'hidden',
-            cursor: 'pointer',
-            transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-            boxShadow: 2,
-            '&:hover': {
-              transform: 'scale(1.1)',
-              boxShadow: 6,
-            },
-          }}
+        <Paper elevation={0} sx={{ padding: 3, marginTop: 6, backgroundColor: '#F0EBE3', }}>
+          <Container maxWidth="lg"
+            sx={{
+              mt: 5, mb: 5,
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              flexWrap: 'wrap',
+              columnGap: 2,
+              alignItems: 'center',
+              justifyContent: 'center',
+              rowGap: 3
+            }}>
+            <Box sx={{
+              borderRadius: 2,
+              overflow: 'hidden',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+              boxShadow: 2,
+              '&:hover': {
+                transform: 'scale(1.1)',
+                boxShadow: 6,
+              },
+            }}
             onClick={() => handleCategoryClick("Matlagning")}>
             <Image src={pickImage} alt='picksvampt' width={180} height={260} style={{ display: 'block' }}
             // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} // Enlarge on hover
@@ -201,21 +211,31 @@ const Homepage = ({ blogs }: Props) => {
             />
           </Box>
         </Container>
-      </Paper>
-      <Container maxWidth="lg" sx={{ mt: 10 }}>
-        {paginatedData.length <= 0 ?
-          (<Typography gutterBottom align="left" color="primary" sx={{ mt: 10, fontFamily: 'Montserrat', fontSize: '30px', mb: 4, textAlign: 'center' }}>
-            Ingen varor tillgänliga för den valda kategorin.
-          </Typography>)
-          : (<>
-            <Grid2
-              container
-              spacing={4}
-              justifyContent="center">
-              {paginatedData.map((blog) => (
+        </Paper>
+        <Container maxWidth="lg"
+          sx={{
+            mt: 5,
+            mb: 5,
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            flexWrap: 'wrap',
+            rowGap: 3,
+            columnGap: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          {paginatedData.length <= 0 ?
+            (<Typography gutterBottom align="left" color="primary" sx={{ mt: 10, fontFamily: 'Montserrat', fontSize: '30px', mb: 4, textAlign: 'center' }}>
+              Ingen varor tillgänliga för den valda kategorin.
+            </Typography>)
+            : (<>
+              <Grid2
+                container
+                spacing={4}
+                justifyContent="center">
+                {paginatedData.map((blog) => (
                 <Grid2 key={blog._id}>
                   <Card
-                    
                     sx={{
                       height: '100%',
                       // backgroundColor: '#EAEBF1',

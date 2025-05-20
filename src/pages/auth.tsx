@@ -176,9 +176,10 @@ const Auth = () => {
             marginTop: 8,
             marginBottom: 10,
             display: 'flex',
-            flexDirection: 'row',
+            flexDirection: { xs: 'column', md: 'row' },
             justifyContent: 'space-between',
             backgroundColor: '#F0EBE3',
+            gap: { xs: 4, md: 0 },
           }}
         >
           {/* Login Form Section - white background */}
@@ -187,7 +188,7 @@ const Auth = () => {
               backgroundColor: '#fff',
               padding: 3,
               flex: 1,
-              maxWidth: '50%',
+              maxWidth: { xs: '100%', md: '50%' },
             }}
           >
             <Typography variant="h5" gutterBottom>
@@ -220,7 +221,7 @@ const Auth = () => {
               backgroundColor: '#f1f5f5',
               padding: 3,
               flex: 1,
-              maxWidth: '50%',
+              maxWidth: { xs: '100%', md: '50%' },
             }}
           >
             <Typography variant="h5" gutterBottom>

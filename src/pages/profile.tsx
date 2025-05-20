@@ -60,14 +60,17 @@ const Profile = ({ blogs }: Props) => {
       <Paper
         elevation={3}
         sx={{
-          padding: 3,
-          marginTop: 8,
-          marginBottom: 10,
+          paddingRight: 4,
+          paddingTop: 4,
+          pb: 4,
+          mt: 8,
+          mb: 10,
+          ml: 'auto',
+          mr: 'auto',
           display: 'flex',
-          flexDirection: 'row',
-          width: '50%',
-          margin: '40px auto',
-          columnGap: 4,
+          flexDirection: { xs: 'column', md: 'row' }, // stack on small screens
+          width: { xs: '90%', md: '80%', lg: '70%' }, // responsive width
+          gap: 4,
           backgroundColor: '#F0EBE3',
         }}
       >
@@ -75,13 +78,12 @@ const Profile = ({ blogs }: Props) => {
         <Box
           sx={{
             backgroundColor: '#fff',
-            padding: 3,
-            flex: 1,
-            maxWidth: '15%',
+            p: 3,
+            flex: { xs: 'none', md: 1 },
+            width: { xs: '100%', md: '30%' }, // full width on mobile
             display: 'flex',
             flexDirection: 'column',
-            rowGap: 2,
-            alignItems: 'flex-start',
+            gap: 2,
           }}
         >
           <Typography variant="h5" gutterBottom
@@ -171,19 +173,19 @@ const Profile = ({ blogs }: Props) => {
         <Box
           sx={{
             backgroundColor: '#fff',
-            padding: 3,
-            flex: 1,
-            maxWidth: '85%',
+            p: 3,
+            flex: 2,
+            width: { xs: '100%', md: '70%' },
           }}
         >
           {isPage === 0 && user && (
-            <EditProfile user={user} setUser = {setUser} />
+            <EditProfile user={user} setUser={setUser} />
           )}
           {isPage === 1 && (
             <>
               <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: { xs: 'column', sm: 'row' },
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
@@ -206,9 +208,9 @@ const Profile = ({ blogs }: Props) => {
                 }}
               >
                 {myBlogs.map((blog, index) => (
-                  <Link 
-                  key={index}
-                  href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link
+                    key={index}
+                    href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
                       elevation={3}
                       sx={{
@@ -251,7 +253,7 @@ const Profile = ({ blogs }: Props) => {
 
                 ))}
               </Container>
-              
+
             </>
           )}
           {isPage === 2 && (
@@ -267,9 +269,9 @@ const Profile = ({ blogs }: Props) => {
                 }}
               >
                 {myFavorites.map((blog, index) => (
-                  <Link 
-                  key={index}
-                  href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Link
+                    key={index}
+                    href={`/blog/${blog._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <Paper
                       elevation={3}
                       sx={{
@@ -312,5 +314,5 @@ const Profile = ({ blogs }: Props) => {
 
 export default Profile
 
-export { getServerSideProps } 
+export { getServerSideProps }
 

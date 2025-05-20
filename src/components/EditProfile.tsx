@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, Grid2, Snackbar, TextField } from '@mui/material';
+import { Alert, Avatar, Box, Button, Grid2, Snackbar, TextField, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 interface User {
@@ -32,8 +32,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, setUser }) => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [message, setMessage] = useState("");
-    
-    
+
+
 
     useEffect(() => {
         console.log("EditProfile user:", user);
@@ -108,7 +108,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, setUser }) => {
                 setMessage(data.message || "Något gick fel");
             }
             setOpenSnackbar(true);
-            
+
         } catch (error) {
             console.error("Fel vid uppdatering:", error);
             setMessage("Något gick fel");
@@ -117,32 +117,38 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, setUser }) => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }} component="form" onSubmit={handleSubmit}>
+        <Box sx={{ display: 'flex', 
+        flexDirection: 'column',
+      
+         }} component="form" onSubmit={handleSubmit}>
             <Grid2 container spacing={3} sx={{ flexDirection: 'column', rowGap: 2, alignItems: 'flex-start', paddingLeft: 3 }}>
                 <Grid2>
-                    <h1>Redigera profil</h1>
+                    <Typography variant="h5" sx={{ pl: 3, mt: 2, mb: 2 }}>
+                        Redigera profil
+                    </Typography>
                 </Grid2>
             </Grid2>
             <Box sx={{
-                padding: 3,
-                flex: 1,
-                width: '100%',
                 display: 'flex',
-                flexDirection: 'row',
-                columnGap: 12,
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: { xs: 4, md: 10 },
+                px: { xs: 2, md: 4 },
+                pb: 4,
             }}>
-                <Grid2 container spacing={3} sx={{ flexDirection: 'column', rowGap: 2, alignItems: 'flex-start' }}>
-                    <Grid2><TextField fullWidth label="E-post" name="email" value={editFormData.email} required sx={{backgroundColor: '#f0f0f0'}} /></Grid2>
+                <Grid2 container spacing={3} sx={{ flexDirection: 'column', flex: 1 }}>
+                    <Grid2><TextField fullWidth label="E-post" name="email" value={editFormData.email} required sx={{ backgroundColor: '#f0f0f0' }} /></Grid2>
                     <Grid2><TextField fullWidth label="Förnamn" name="firstName" value={editFormData.firstName} onChange={handleChange} required /></Grid2>
                     <Grid2><TextField fullWidth label="Efternamn" name="lastName" value={editFormData.lastName} onChange={handleChange} required /></Grid2>
                     <Grid2><TextField fullWidth label="Användarnamn" name="userName" value={editFormData.userName} onChange={handleChange} required /></Grid2>
                 </Grid2>
-                <Grid2 container spacing={3} sx={{ flexDirection: 'column', rowGap: 2, alignItems: 'flex-start' }}>
-                    <Grid2><TextField fullWidth label="Nuvarande Lösenord" name="password" type="password" value={editFormData.password} required sx={{backgroundColor: '#f0f0f0'}}/></Grid2>
+                <Grid2 container spacing={3} sx={{ flexDirection: 'column', flex: 1 }}>
+                    <Grid2><TextField fullWidth label="Nuvarande Lösenord" name="password" type="password" value={editFormData.password} required sx={{ backgroundColor: '#f0f0f0' }} /></Grid2>
                     <Grid2><TextField fullWidth label="Ny Lösenord" name="newPassword" type="password" value={editFormData.newPassword} onChange={handleChange} /></Grid2>
                     <Grid2><TextField fullWidth label="Bekräfta Nytt Lösenord" name="confirmPassword" type="password" value={editFormData.confirmPassword} onChange={handleChange} /></Grid2>
                 </Grid2>
-                <Grid2 container spacing={3} sx={{ flexDirection: 'column', marginLeft: 'auto', marginRight: 10}}>
+                <Grid2 container spacing={3} direction="column"
+                    alignItems="center"
+                    sx={{ flexShrink: 0 }}>
                     <Avatar
                         alt={user?.firstName}
                         src={imagePreview || user?.imageUrl || ''}
@@ -154,7 +160,14 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, setUser }) => {
                     </Button>
                 </Grid2>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', marginTop: 4, columnGap: 4, justifyContent: 'flex-end' }}>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                justifyContent: 'flex-end',
+                gap: 2,
+                px: { xs: 2, md: 4 },
+                mb: 4,
+            }}>
                 <Grid2>
                     <Button type="submit" variant="outlined" color="primary" fullWidth sx={{ textTransform: 'none', fontSize: '1rem' }}>Spara</Button>
                 </Grid2>
@@ -163,7 +176,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ user, setUser }) => {
                 </Grid2>
             </Box>
             <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)}>
-                <Alert severity={message.includes("uppdaterad") ? "success" : "error"}>{message}</Alert>  
+                <Alert severity={message.includes("uppdaterad") ? "success" : "error"}>{message}</Alert>
             </Snackbar>
         </Box>
     );

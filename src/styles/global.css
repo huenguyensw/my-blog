@@ -12,9 +12,10 @@
     src: url('../fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
   }
   
-  body {
+  html,body {
     font-family: 'Pacifico', cursive;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
     max-width: 100vw;
     overflow-x: hidden;

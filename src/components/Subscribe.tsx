@@ -3,42 +3,85 @@ import React from 'react'
 
 const Subscribe = () => {
   return (
-    <Container maxWidth='lg' sx={{   display: 'flex', flexDirection: 'column', alignItems: 'center',  backgroundImage: `url('/images/sub1.jpg')`,
-                  backgroundSize: 'cover',
-                  objectFit: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  width: '100%',
-                  position: 'relative',paddingTop: 4,paddingBottom: 4, marginTop: 8, rowGap: 1, borderRadius: 1, marginBottom: 8 }}>
-    
-      <h1 style={{ color: 'white', fontSize: '34px', fontWeight: '500', lineHeight: '0.3' }}>Prenumerera</h1>
-      <Divider sx={{ width: '12%', backgroundColor: 'white', height: 2, fontWeight: '400' }} />
-      <Typography sx={{ color: 'white', fontSize: '16px', fontFamily: 'Montserrat', mb: 4, fontWeight: '400' }}>Prenumerera på vårt nyhetsbrev och håll dig uppdaterad!</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', columnGap: 2 }}>
-        <TextField 
+    <Container maxWidth='lg'
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: { xs: 1, sm: 0 },
+        alignItems: 'center',
+        backgroundImage: `url('/images/sub1.jpg')`,
+        backgroundSize: 'cover',
+        objectFit: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width: '100%',
+        position: 'relative',
+        px: { xs: 2, sm: 4 },
+        py: { xs: 4, sm: 6 },
+        mt: 8,
+        mb: 8,
+        borderRadius: 1,
+        textAlign: 'center',
+      }}>
+
+      <Typography
+        variant="h4"
+        sx={{
+          color: 'white',
+          fontWeight: 500,
+          fontSize: { xs: '24px', sm: '32px' },
+          mb: 1,
+        }}
+      >
+        Prenumerera
+      </Typography>
+      <Divider
+        sx={{
+          width: '60px',
+          backgroundColor: 'white',
+          height: '2px',
+          mb: 2,
+        }} />
+      <Typography sx={{
+        color: 'white',
+        fontSize: { xs: '14px', sm: '16px' },
+        fontFamily: 'Montserrat',
+        mb: 3,
+        fontWeight: 400,
+        maxWidth: '600px',
+      }}>Prenumerera på vårt nyhetsbrev och håll dig uppdaterad!</Typography>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: 'center',
+        columnGap: 2,
+        width: '100%',
+        maxWidth: '500px',
+      }}>
+        <TextField
+          fullWidth
           name="name"
           label="Din e-post"
+          variant="outlined"
           sx={{
-            minWidth: '400px',
-            borderRadius: 1,
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderRadius: 1.5,
-              borderColor: 'white',
-              fontWeight: '400'
-            },
+            input: { color: 'white' },
+            label: { color: 'white' },
             '& .MuiOutlinedInput-root': {
-              height: '3em', 
               color: 'white',
-              alignItems: 'center',
-              fontWeight: '400'
+              borderRadius: 2,
             },
-            '& .MuiInputLabel-root': {
-              color: 'white',
-              fontWeight: '400'
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'white',
             },
           }}
           required />
-        <Button variant="contained" color='warning' sx={{ marginLeft: 1, padding: '1 2'  }}>
+        <Button variant="contained" color='warning'
+          sx={{
+            whiteSpace: 'nowrap',
+            px: 4,
+            py: 1.2,
+            mt: { xs: 2, sm: 0 },
+          }}>
           Skicka
         </Button>
       </Box>
