@@ -122,8 +122,8 @@ const Header = () => {
                         alt="User"
                         src={user?.imageUrl} 
                         sx={{ 
-                            width: { xs: 60, sm: 62, md: 70 }, 
-                            height: { xs: 60, sm: 62, md: 70 }, 
+                            width: { xs: 54, sm: 56, md: 64 }, 
+                            height: { xs: 54, sm: 56, md: 64 }, 
                             cursor: 'pointer',
                         }}
                         onClick={() => router.push("/profile?isLoginPage=false")}
@@ -147,7 +147,8 @@ const Header = () => {
                     backgroundColor: '#F0EBE3',
                     position: 'relative',
                     overflow: 'hidden',
-                    pb: '100px'
+                    pb: '100px',
+                    display: { xs: 'none', sm: 'block' }
                 }}>
                 <Container maxWidth="lg"
                     sx={{
