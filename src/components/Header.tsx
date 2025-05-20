@@ -118,7 +118,15 @@ const Header = () => {
                         <Avatar
                             sx={{
                                 width: 45,
-                                height: 45, cursor: 'pointer'
+                                height: 45, cursor: 'pointer',
+                                position: { xs: 'absolute', sm: 'static'},
+                                top: '10px',
+                                right: '10px',
+                                border: '2px solid #F0EBE3', 
+                                backgroundColor: '#F0EBE3',
+                                p: 0.2,            
+                                boxShadow: 2,                         
+                                transition: 'transform 0.2s ease-in-out',
                             }}
                             onClick={() => router.push("/auth?isLoginPage=true")}
                         />
