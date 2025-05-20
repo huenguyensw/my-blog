@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Head from "next/head";
 import { getServerSideProps } from './api/get';
-import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TablePagination, Avatar, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, InputAdornment, IconButton, MenuItem } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid2, Paper, Typography, Rating, TablePagination, Avatar, Dialog, DialogContent, DialogContentText, DialogActions, TextField, InputAdornment, IconButton, MenuItem } from '@mui/material';
 import Image from 'next/image';
 import matImage from "../../public/images/Matsvampar.jpg"
 import favoriteImage from '../../public/images/favorite.png'
