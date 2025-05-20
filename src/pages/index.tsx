@@ -73,6 +73,7 @@ const Homepage = ({ blogs }: Props) => {
 
       return matchesSearch && matchesCategory && matchesFilter;
     });
+    console.log('selected category',selectedCategory)
 
     setFilteredData(filtered);
     setPage(0);
@@ -96,6 +97,10 @@ const Homepage = ({ blogs }: Props) => {
 
   // Handle Category Click
   const handleCategoryClick = (category: string) => {
+    if(selectedCategory && selectedCategory === category){
+      setSelectedCategory(null);
+      return ;
+    }
     setSelectedCategory(category); // Update state with clicked category
   };
 
@@ -192,13 +197,14 @@ const Homepage = ({ blogs }: Props) => {
               overflow: 'hidden',
               cursor: 'pointer',
               transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+              border: selectedCategory === 'Svampar' ? '2px solid #F0EBE3' : 'none',
               boxShadow: 2,
               '&:hover': {
                 transform: 'scale(1.1)',
                 boxShadow: 6,
               },
             }}
-              onClick={() => handleCategoryClick("Matlagning")}>
+              onClick={() => handleCategoryClick("Svampar")}>
               <Image src={pickImage} alt='picksvampt' width={180} height={260} style={{ display: 'block' }}
               // onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} // Enlarge on hover
               // onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} // Restore size
@@ -209,13 +215,14 @@ const Homepage = ({ blogs }: Props) => {
               overflow: 'hidden',
               cursor: 'pointer',
               transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+              border: selectedCategory === 'Matlagning' ? '2px solid #F0EBE3' : 'none',
               boxShadow: 2,
               '&:hover': {
                 transform: 'scale(1.1)',
                 boxShadow: 6,
               },
             }}
-              onClick={() => handleCategoryClick("Svampar")}>
+              onClick={() => handleCategoryClick("Matlagning")}>
               <Image src={matImage} alt='matsvampart' width={180} height={260} style={{ display: 'block' }}
               />
             </Box>
@@ -224,6 +231,7 @@ const Homepage = ({ blogs }: Props) => {
               overflow: 'hidden',
               cursor: 'pointer',
               transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+              border: selectedCategory === 'Konservering' ? '2px solid #F0EBE3' : 'none',
               boxShadow: 2,
               '&:hover': {
                 transform: 'scale(1.1)',
