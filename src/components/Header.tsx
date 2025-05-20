@@ -1,7 +1,6 @@
-import { Avatar, Box, Container, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material'
 import Image from 'next/image'
 import React, { useContext, useState } from 'react'
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import waveImage from "../../public/images/wave2.png"
 import svampImage from "../../public/images/launam.jpg"
 import svampLogo from "../../public/images/svamp.png"
@@ -18,25 +17,30 @@ const Header = () => {
     const { token, user } = useContext(AuthContext);
     const searchParams = useSearchParams();
     const isLoginPage = searchParams.get('isLoginPage') === 'true';
-    const pathname = usePathname(); 
-    const [searchQuery, setSearchQuery] = useState("");
-    const handleSearch = () => {
-        console.log("Searching for:", searchQuery);
-    };
+    const pathname = usePathname();
+    const [loginPromptOpen, setLoginPromptOpen] = useState(false);
 
 
+
+    const handleAddBlog = () => {
+        if (!user) {
+            setLoginPromptOpen(true);
+            return;
+        }
+        window.location.href = '/add'
+    }
 
 
     return (
         <Box>
-            <Box 
+            <Box
                 sx={{
                     display: 'flex',
                     flexDirection: { xs: 'column', sm: 'row' },
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     backgroundColor: '#5C9AC2',
-                    // marginTop: 0,
+                    position: 'relative',
                     padding: 1,
                     rowGap: { xs: 1, sm: 0 },
                 }}>
@@ -48,7 +52,7 @@ const Header = () => {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                       mb: { xs: 1, sm: 0 },
+                        mb: { xs: 1, sm: 0 },
                     }}
                     onClick={() => window.location.href = '/'}
                 >
@@ -57,7 +61,7 @@ const Header = () => {
                         alt="Svampens Värld"
                         width={85}
                         height={70}
-                        style={{ marginRight: '8px', marginTop: '5px' }} 
+                        style={{ marginRight: '8px', marginTop: '5px' }}
                     />
                     <Typography sx={{ fontFamily: 'Pacifico', color: 'white', fontSize: 20 }}>Svampens Värld</Typography>
                 </Box>
@@ -74,64 +78,44 @@ const Header = () => {
                 </Typography>
                 <Box
                     sx={{
+                        
                         display: 'flex',
                         flexDirection: { xs: 'row', sm: 'row' },
+                        flexWrap: 'wrap',
                         columnGap: 2,
                         rowGap: { xs: 1, sm: 0 },
                         alignItems: 'center',
                         width: { xs: '100%', sm: 'auto' },
                         justifyContent: { xs: 'center', sm: 'flex-end' },
-                         mt: { xs: 1, sm: 0 }, 
+                        mt: { xs: 1, sm: 0 },
                     }}>
-                    <TextField
-                        variant="outlined"
-                        placeholder="Sök svamp"
-                        value={searchQuery} // Controlled input state
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        sx={{
-                            fontFamily: 'Montserrat',
-                            paddingBottom: 0.5,
-                             width: { xs: '70%', sm: '300px', md: '350px' },
-                            // width: '350px',
-                            border: 'none',
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '8px', // Rounded corners
-                                height: '2.5em', // Height of the input field
-                                color: 'white', // Text color
-                                // '&:hover fieldset': { border: 'none' }, // Hover effect
-                                // '&.Mui-focused fieldset': { border: '#none' } // Focus effect
-                            },
-                            '& .MuiInputLabel-root': {
-                                color: 'white', // Label color
-                            },
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'white', // Border color   
-                            }
-                        }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <IconButton onClick={handleSearch}>
-                                        <SearchOutlinedIcon sx={{ color: '#F0EBE3' }} />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    {token? (
-                        <Avatar 
-                        alt="User"
-                        src={user?.imageUrl} 
-                        sx={{ 
-                            width: { xs: 54, sm: 56, md: 64 }, 
-                            height: { xs: 54, sm: 56, md: 64 }, 
-                            cursor: 'pointer',
-                        }}
-                        onClick={() => router.push("/profile?isLoginPage=false")}
-                      />
-                    ) : ( 
-                    !isLoginPage && 
-                        <Avatar 
+                    {pathname !== '/add' && <Button variant='outlined' color='secondary' onClick={handleAddBlog}
+                        sx={{ textTransform: 'none', fontSize: '1rem', fontFamily: 'Montserrat' }}>
+                        Skapa nytt inlägg
+                    </Button>}
+
+                    {token ? (
+                        <Avatar
+                            alt="User"
+                            src={user?.imageUrl}
+                            sx={{
+                                width: { xs: 54, sm: 56, md: 64 },
+                                height: { xs: 54, sm: 56, md: 64 },
+                                cursor: 'pointer',
+                                position: { xs: 'absolute', sm: 'static'},
+                                top: '10px',
+                                right: '10px',
+                                border: '2px solid #F0EBE3', 
+                                backgroundColor: '#F0EBE3',
+                                p: 0.2,            
+                                boxShadow: 2,                         
+                                transition: 'transform 0.2s ease-in-out',
+                            }}
+                            onClick={() => router.push("/profile?isLoginPage=false")}
+                        />
+                    ) : (
+                        !isLoginPage &&
+                        <Avatar
                             sx={{
                                 width: 45,
                                 height: 45, cursor: 'pointer'
@@ -141,7 +125,8 @@ const Header = () => {
                     )}
                 </Box>
             </Box>
-            {pathname === '/profile' ? <Paper elevation={0}
+            {(pathname === '/profile' || pathname === '/add')
+            ? <Paper elevation={0}
                 sx={{
                     padding: 3,
                     marginTop: 0,
@@ -237,7 +222,48 @@ const Header = () => {
                             }}
                         />
                     </Box>
-                </Paper>} 
+                </Paper>}
+            <Dialog
+                open={loginPromptOpen}
+                onClose={() => setLoginPromptOpen(false)}
+                BackdropProps={{
+                    sx: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)', // Black with 90% opacity
+                    },
+                }}
+            >
+                <DialogContent
+                    sx={{
+                        display: 'flex',
+                        p: 2,
+                        gap: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        textAlign: 'center',
+                    }}>
+                   
+                    <DialogTitle sx={{ fontFamily: 'Montserrat', fontSize: { xs: '26px', sm: '30px', md: '34px', lg: '40px' } }}>Logga in krävs</DialogTitle>
+                    <DialogContentText sx={{ fontFamily: 'Montserrat', fontSize: { xs: '16px', sm: '18px', md: '20px', lg: '24px' } }}>
+                        Du måste vara inloggad för att kunna lägga till en. Vill du logga in eller registrera dig nu?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setLoginPromptOpen(false)} color="secondary">
+                        Avbryt
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setLoginPromptOpen(false);
+                            window.location.href = '/auth?isLoginPage=true';
+                        }}
+                        variant="contained"
+                        color="primary"
+                    >
+                        Logga in
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
 
         </Box>

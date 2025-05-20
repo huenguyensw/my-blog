@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { TextField, Button, Container, Typography, Paper, Grid2, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText } from "@mui/material";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { AuthContext } from '@/context/Auth';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 
 const Add = () => {
@@ -126,6 +128,8 @@ const Add = () => {
   };
 
   return (
+    <>
+    <Header/>
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 3, marginTop: 10, marginBottom: 10}}>
         <Typography variant="h5" gutterBottom>
@@ -259,6 +263,8 @@ const Add = () => {
         <Alert severity={message.includes("successfully") ? "success" : "error"}>{message}</Alert>
       </Snackbar>
     </Container>
+    <Footer/>
+    </>
   )
 }
 
