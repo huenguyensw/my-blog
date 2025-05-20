@@ -66,7 +66,8 @@ const Header = () => {
                         color: 'white',
                         fontSize: { xs: 24, sm: 32, md: 40 },
                         textAlign: { xs: 'center', sm: 'left' },
-                        mb: { xs: 1, sm: 0 }
+                        mb: { xs: 1, sm: 0 },
+                        display: { xs: 'none', sm: 'block' }
                     }}>
                     Mushrooms Blog
                 </Typography>
@@ -131,8 +132,8 @@ const Header = () => {
                     !isLoginPage && 
                         <Avatar 
                             sx={{
-                                width: { xs: 60, sm: 62, md: 70 },
-                                height: { xs: 60, sm: 62, md: 70 }, cursor: 'pointer'
+                                width: 45,
+                                height: 45, cursor: 'pointer'
                             }}
                             onClick={() => router.push("/auth?isLoginPage=true")}
                         />
@@ -153,7 +154,7 @@ const Header = () => {
                         mt: '0',
                         display: 'flex',
                         flexDirection: { xs: 'column-reverse', sm: 'row' },
-                        columnGap: 2,
+                        gap: 2,
                         alignItems: 'center'
                     }}>
                     <Typography variant='body1'
