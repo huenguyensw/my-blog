@@ -8,6 +8,7 @@ import svampLogo from "../../public/images/svamp.png"
 import { useRouter } from 'next/router';
 import { AuthContext } from '@/context/Auth';
 import { useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 
 
@@ -17,7 +18,7 @@ const Header = () => {
     const { token, user } = useContext(AuthContext);
     const searchParams = useSearchParams();
     const isLoginPage = searchParams.get('isLoginPage') === 'true';
-
+    const pathname = usePathname(); 
     const [searchQuery, setSearchQuery] = useState("");
     const handleSearch = () => {
         console.log("Searching for:", searchQuery);
@@ -140,7 +141,7 @@ const Header = () => {
                     )}
                 </Box>
             </Box>
-            <Paper elevation={0}
+            {pathname === '/profile' ? <Paper elevation={0}
                 sx={{
                     padding: 3,
                     marginTop: 0,
@@ -174,7 +175,7 @@ const Header = () => {
                             maxWidth: '100%',
                             height: 'auto',
                         }}
-                     />
+                    />
                 </Container>
                 <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '80px' }}>
                     <Image
@@ -189,6 +190,55 @@ const Header = () => {
                     />
                 </Box>
             </Paper>
+                : <Paper elevation={0}
+                    sx={{
+                        padding: 3,
+                        marginTop: 0,
+                        backgroundColor: '#F0EBE3',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        pb: '100px',
+                    }}>
+                    <Container maxWidth="lg"
+                        sx={{
+                            mt: '0',
+                            display: 'flex',
+                            flexDirection: { xs: 'column-reverse', sm: 'row' },
+                            gap: 2,
+                            alignItems: 'center'
+                        }}>
+                        <Typography variant='body1'
+                            sx={{
+                                color: '#0c2d72',
+                                fontSize: { xs: '18px', sm: '22px', md: '28px' },
+                                fontFamily: 'Montserrat',
+                                textAlign: { xs: 'center', sm: 'left' },
+                            }}>
+                            Välkommen till Svampbloggen! Här kan du hitta en lista över svampar och deras användningsområden. Du kan också lägga till en ny svamp i listan genom att registrera ett medlemskap och bidra till bloggen.
+                        </Typography>
+                        <Image
+                            src={svampImage}
+                            alt="mushroom"
+                            style={{
+                                maxWidth: '100%',
+                                height: 'auto',
+                            }}
+                        />
+                    </Container>
+                    <Box sx={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '80px' }}>
+                        <Image
+                            src={waveImage}
+                            alt="waveimage"
+                            fill
+                            style={{
+                                // objectFit: 'cover',
+                                // objectPosition: 'bottom',
+                                zIndex: 0,
+                            }}
+                        />
+                    </Box>
+                </Paper>} 
+
 
         </Box>
     )
