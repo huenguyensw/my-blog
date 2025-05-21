@@ -21,7 +21,6 @@ const Header = () => {
     const [loginPromptOpen, setLoginPromptOpen] = useState(false);
 
 
-
     const handleAddBlog = () => {
         if (!user) {
             setLoginPromptOpen(true);
@@ -133,7 +132,7 @@ const Header = () => {
                     )}
                 </Box>
             </Box>
-            {(pathname === '/profile' || pathname === '/add')
+            {(pathname === '/profile' || pathname === '/add' || pathname ==='/auth' || pathname.includes('/blog'))
             ? <Paper elevation={0}
                 sx={{
                     padding: 3,
