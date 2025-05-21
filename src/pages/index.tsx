@@ -170,13 +170,13 @@ const Homepage = ({ blogs }: Props) => {
         <meta property="og:url" content="https://mushroom-blog-omega.vercel.app/" />
         <meta property="og:title" content="Mushroom Blog | Discover, Learn, Share" />
         <meta property="og:description" content="Explore the world of mushrooms with insightful articles, tips, and stunning visuals. 🍄" />
-        <meta property="og:image" content="https://mushroom-blog-omega.vercel.app/images/homepage.png" />
+        <meta property="og:image" content="https://mushroom-blog-omega.vercel.app/images/background.png" />
 
         {/* Twitter Card (optional) */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Mushroom Blog | Discover, Learn, Share" />
         <meta name="twitter:description" content="Explore the world of mushrooms with insightful articles, tips, and stunning visuals. 🍄" />
-        <meta name="twitter:image" content="https://mushroom-blog-omega.vercel.app/images/homepage.png" />
+        <meta name="twitter:image" content="https://mushroom-blog-omega.vercel.app/images/background.png" />
       </Head>
       <Box>
         <Header />
