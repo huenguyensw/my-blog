@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍄 Mushroom Blog Platform
 
-## Getting Started
+A full-stack blog platform where users can explore, create, and share articles about mushrooms. Built with modern technologies like **Next.js 15**, **Firebase**, and **MongoDB**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔗 [Check it out here](https://mushroom-blog-omega.vercel.app/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Features
 
-## Learn More
+- 🔐 **Authentication** with JWT & custom API routes
+- 📤 **Image Upload** using Firebase Cloud Storage
+- 🧠 **SEO-friendly** with Open Graph & Twitter meta tags
+- 🌐 **Responsive Design** (Mobile/Desktop)
+- 📝 **Blog Post Creation** with Markdown-ready structure
+- 🧭 **Dynamic Routing** with Next.js App Router
+- 🧰 **Server-side Rendering** for optimal performance
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠 Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Frontend | Backend | Database | Other |
+|----------|---------|----------|-------|
+| Next.js 15 | Node.js API Routes | MongoDB + Mongoose | Firebase Storage |
+| React | JWT Auth |  | MUI (Material UI) |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📷 Screenshots
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![background](https://github.com/user-attachments/assets/1b7b42a8-818a-492e-8e3f-376f20646110)
+![mobile2](https://github.com/user-attachments/assets/f916e677-5093-4926-b199-3c643de54090)
+![mobile](https://github.com/user-attachments/assets/f542ab1e-b985-4ac9-a1df-86e41d1eef99)
+
+---
+
+## 📂 Project Structure
+
